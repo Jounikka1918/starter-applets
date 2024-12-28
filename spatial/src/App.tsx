@@ -12,29 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useEffect } from "react";
-import { TopBar } from "./TopBar.js";
-import { Content } from "./Content.js";
-import { ExampleImages } from "./ExampleImages.js";
-import { SideControls } from "./SideControls.js";
-import { Prompt } from "./Prompt.js";
-import { ExtraModeControls } from "./ExtraModeControls.js";
 import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { Content } from "./Content.js";
+import { DetectTypeSelector } from "./DetectTypeSelector.js";
+import { ExampleImages } from "./ExampleImages.js";
+import { ExtraModeControls } from "./ExtraModeControls.js";
+import { Prompt } from "./Prompt.js";
+import { SideControls } from "./SideControls.js";
+import { TopBar } from "./TopBar.js";
 import {
   BumpSessionAtom,
   ImageSrcAtom,
   InitFinishedAtom,
-  IsUploadedImageAtom,
+  IsUploadedImageAtom
 } from "./atoms.js";
-import { useResetState } from "./hooks.js";
-import { DetectTypeSelector } from "./DetectTypeSelector.js";
 import { safetySettings } from "./consts.js";
+import { useResetState } from "./hooks.js";
 
 function App() {
   const [initFinished, setInitFinished] = useAtom(InitFinishedAtom);
   const [bumpSession, setBumpSession] = useAtom(BumpSessionAtom);
   const [isUploadedImage, setIsUploadedImage] = useAtom(IsUploadedImageAtom);
-  const [imageSrc, setImageSrc] = useAtom(ImageSrcAtom);
+  const [imageSrc] = useAtom(ImageSrcAtom);
   const resetState = useResetState();
 
   useEffect(() => {
@@ -43,7 +43,9 @@ function App() {
     }
     // Set safety settings
     Object.entries(safetySettings).forEach(([key, value]) => {
-      const element = document.querySelector<HTMLMetaElement>(`meta[name="${key}"]`);
+      const element = document.querySelector<HTMLMetaElement>(
+        `meta[name="${key}"]`
+      );
       if (element) {
         element.content = value.toString();
       }
@@ -66,7 +68,6 @@ function App() {
           <DetectTypeSelector />
           <Prompt />
         </div>
-
       </div>
     </div>
   );
