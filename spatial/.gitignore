@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+starter-applets/spatial/.env
+starter-applets-main/maps/script.js
+starter-applets/video/.env

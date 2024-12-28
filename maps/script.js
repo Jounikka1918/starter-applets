@@ -15,12 +15,11 @@
 // script.js
 // Authors: kylephillips@ bencobley@
 
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.21.0";
+import { html, render } from "https://esm.run/lit";
+import { client } from "./client.js";
 import * as mapsFunction from "./function-declarations.js";
 import { presets } from "./presets.js";
-import { html, render } from "https://esm.run/lit";
 
-const client = new GoogleGenerativeAI("your_key_here");
 const systemInstruction = mapsFunction.systemInstructions;
 
 const functionDeclarations = mapsFunction.declarations.map(declaration => ({
