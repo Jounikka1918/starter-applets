@@ -31,16 +31,23 @@ import { DetectTypeSelector } from "./DetectTypeSelector.js";
 import { safetySettings } from "./consts.js";
 
 function App() {
-  const [, setImageSrc] = useAtom(ImageSrcAtom);
-  const resetState = useResetState();
   const [initFinished, setInitFinished] = useAtom(InitFinishedAtom);
-  const [, setBumpSession] = useAtom(BumpSessionAtom);
-  const [, setIsUploadedImage] = useAtom(IsUploadedImageAtom);
+  const [bumpSession, setBumpSession] = useAtom(BumpSessionAtom);
+  const [isUploadedImage, setIsUploadedImage] = useAtom(IsUploadedImageAtom);
+  const [imageSrc, setImageSrc] = useAtom(ImageSrcAtom);
+  const resetState = useResetState();
 
   useEffect(() => {
     if (!window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.classList.remove("dark");
     }
+    // Set safety settings
+    Object.entries(safetySettings).forEach(([key, value]) => {
+      const element = document.querySelector<HTMLMetaElement>(`meta[name="${key}"]`);
+      if (element) {
+        element.content = value.toString();
+      }
+    });
   }, []);
 
   return (
@@ -63,6 +70,13 @@ function App() {
       </div>
     </div>
   );
+}
+
+if (import.meta.env.DEV) {
+  // Use try/catch block to catch any unexpected errors
+  window.onerror = (event) => {
+    console.error(event);
+  };
 }
 
 export default App;
